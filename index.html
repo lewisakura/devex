@@ -93,7 +93,7 @@
     <div class="container">
         <span>
             <label for="robux">R$</label>
-            <input type="number"
+            <input type="text"
                    id="robux"
                    placeholder="0" />
         </span>
@@ -110,7 +110,7 @@
         </svg>
         <span>
             <label for="usd">$</label>
-            <input type="number"
+            <input type="text"
                    id="usd"
                    placeholder="0" />
         </span>
@@ -121,21 +121,27 @@
         const robux = document.getElementById("robux");
         const usd = document.getElementById("usd");
 
+        const formatter = new Intl.NumberFormat();
+
         robux.addEventListener("input", function () {
-            const robux = parseInt(this.value);
+            this.value = formatter.format(this.value.replace(/[^0-9]/g, ""));
+
+            const robux = parseInt(this.value.replace(/,./g, ""));
             if (!isNaN(robux)) {
                 const usdC = (robux * rate).toFixed(0);
-                usd.value = usdC;
+                usd.value = formatter.format(usdC);
             } else {
                 usd.value = "";
             }
         });
 
         usd.addEventListener("input", function () {
-            const usd = parseInt(this.value);
+            this.value = formatter.format(this.value.replace(/[^0-9]/g, ""));
+
+            const usd = parseInt(this.value.replace(/,./g, ""));
             if (!isNaN(usd)) {
                 const robuxC = (usd / rate).toFixed(0);
-                robux.value = robuxC;
+                robux.value = formatter.format(robuxC);
             } else {
                 robux.value = "";
             }
