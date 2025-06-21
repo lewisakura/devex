@@ -126,7 +126,7 @@
         robux.addEventListener("input", function () {
             this.value = formatter.format(this.value.replace(/[^0-9]/g, ""));
 
-            const robux = parseInt(this.value.replace(/,./g, ""));
+            const robux = parseInt(this.value.replace(/[,.]/g, ""));
             if (!isNaN(robux)) {
                 const usdC = (robux * rate).toFixed(0);
                 usd.value = formatter.format(usdC);
@@ -138,7 +138,7 @@
         usd.addEventListener("input", function () {
             this.value = formatter.format(this.value.replace(/[^0-9]/g, ""));
 
-            const usd = parseInt(this.value.replace(/,./g, ""));
+            const usd = parseInt(this.value.replace(/[,.]/g, ""));
             if (!isNaN(usd)) {
                 const robuxC = (usd / rate).toFixed(0);
                 robux.value = formatter.format(robuxC);
