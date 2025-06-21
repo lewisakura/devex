@@ -1,0 +1,146 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>DevEx Calculator</title>
+
+    <link rel="stylesheet"
+          href="normalize.css" />
+    <link rel="stylesheet"
+          href="sakura.css"
+          media="screen" />
+    <link rel="stylesheet"
+          href="sakura-dark.css"
+          media="screen and (prefers-color-scheme: dark)" />
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+
+            width: 100%;
+
+            gap: 1em;
+
+            align-items: center;
+        }
+
+        svg {
+            width: 4em;
+            height: 4em;
+        }
+
+        input {
+            width: 100%;
+
+            margin: 0;
+
+            border-radius: 0 4px 4px 0;
+        }
+
+        label {
+            margin: 0;
+            padding: 6px 0px 6px 10px;
+
+            border: 1px solid #f1f1f1;
+            background-color: #f1f1f1;
+
+            border-radius: 4px 0 0 4px;
+
+            font-weight: 700;
+
+            @media (prefers-color-scheme: dark) {
+                background-color: #4a4a4a;
+                border: 1px solid #4a4a4a;
+            }
+        }
+
+        span {
+            display: inline-flex;
+
+            align-items: stretch;
+            justify-content: center;
+
+            width: 100%;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+
+            span {
+                width: 100%;
+            }
+
+            input {
+                width: 100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span>
+            <label for="robux">R$</label>
+            <input type="number"
+                   id="robux"
+                   placeholder="0" />
+        </span>
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M8 3 4 7l4 4" />
+            <path d="M4 7h16" />
+            <path d="m16 21 4-4-4-4" />
+            <path d="M20 17H4" />
+        </svg>
+        <span>
+            <label for="usd">$</label>
+            <input type="number"
+                   id="usd"
+                   placeholder="0" />
+        </span>
+    </div>
+
+    <script>
+        const rate = 0.0035;
+        const robux = document.getElementById("robux");
+        const usd = document.getElementById("usd");
+
+        robux.addEventListener("input", function () {
+            const robux = parseInt(this.value);
+            if (!isNaN(robux)) {
+                const usdC = (robux * rate).toFixed(0);
+                usd.value = usdC;
+            } else {
+                usd.value = "";
+            }
+        });
+
+        usd.addEventListener("input", function () {
+            const usd = parseInt(this.value);
+            if (!isNaN(usd)) {
+                const robuxC = (usd / rate).toFixed(0);
+                robux.value = robuxC;
+            } else {
+                robux.value = "";
+            }
+        });
+    </script>
+</body>
+
+</html>
